@@ -53,7 +53,7 @@
 
   // 1. обернуть пункты с точкой в <li></li>
   // шаблон: точка -> 2 и более пробелов или &nbsp; -> 1 и более любых символов
-  badList = badList.replace(/●[&nbsp; \s]{2,}.+/g, "<li>$&</li>");
+  badList = badList.replace(/●(&nbsp;|\s){2,}.+/g, "<li>$&</li>");
   console.log("Добавить li" + badList);
 
 
