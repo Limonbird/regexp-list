@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<h1>+ xhr</h1>
+
 <div class="bad-list">
 <p>Абзац с текстом в котором есть жирная точка ●, перенос<br>строки и неразрывный&nbsp;пробел.</p>
 <h2>Первый косячный список</h2>
@@ -70,10 +72,8 @@
 
   goodList.innerHTML = badList;
 
-  var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
 
-var raw = JSON.stringify({
+var data = JSON.stringify({
   "order_num": 1,
   "order_raw": {
     "shopperSurname": "Каркавина",
@@ -111,18 +111,19 @@ var raw = JSON.stringify({
   }
 });
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-fetch("https://functions.yandexcloud.net/d4e1kjg25rb3rbcnqii0", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+xhr.addEventListener("readystatechange", function() {
+  if(this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
 
+xhr.open("POST", "https://functions.yandexcloud.net/d4e1kjg25rb3rbcnqii0");
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.send(data);
 </script>
 
 <style>
