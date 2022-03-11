@@ -73,57 +73,72 @@
   goodList.innerHTML = badList;
 
 
-var data = JSON.stringify({
-  "order_num": 1,
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "order_num": 1001,
   "order_raw": {
-    "shopperSurname": "Каркавина",
-    "shopperName": "Юля",
-    "shopperPhone": "+72121212122",
-    "shopperEmail": "julia-barb@yandex.ru",
+    "shopperSurname": "Гуламбаева",
+    "shopperName": "Малика",
+    "shopperPhone": "+79147861515",
+    "shopperEmail": "malika@spacecrabs.ru",
     "shopperComment": "",
-    "receiverSurname": "Каркавина",
-    "receiverName": "Юля",
-    "receiverPhone": "+72121212122",
-    "receiverEmail": "julia-barb@yandex.ru",
-    "receiverTown": "Вилючинск",
-    "receiverTownId": 133,
-    "receiverAddress": "ул Чубарова",
+    "receiverSurname": "",
+    "receiverName": "Малика",
+    "receiverPhone": "+79147861515",
+    "receiverEmail": "malika@spacecrabs.ru",
+    "receiverTown": "Петропавловск-Камчатский",
+    "receiverTownId": 131,
+    "receiverAddress": "ул Зеркальная, д 47",
     "invoiceTargetType": "email",
-    "invoiceEmail": "julia-barb@yandex.ru",
-    "invoicePhone": "+72121212122",
-    "deliveryType": 3,
-    "deliveryDate": "",
-    "deliveryPrice": 250,
-    "paymentType": 517,
-    "promocode": "",
+    "invoiceEmail": "malika@spacecrabs.ru",
+    "invoicePhone": "+79147861515",
+    "deliveryType": 64,
+    "deliveryDate": "2021-12-21T00:00:00+12:00",
+    "deliveryPrice": 0,
+    "paymentType": 129,
+    "promocode": "LOBSTER",
     "source": {
-      "yandex_client_id": "1619148460707394619",
-      "google_client_id": "GA1.1.1585710437.1632181936"
+      "utmstat_client_id": "1639541649477211680"
     },
     "items": [
       {
-        "itemId": "3216",
+        "itemId": "1710",
         "count": 1,
-        "price": 346
+        "price": 93
+      },
+      {
+        "itemId": "2749",
+        "count": 2,
+        "price": 98
+      },
+      {
+        "itemId": "3122",
+        "count": 2,
+        "price": 88
+      },
+      {
+        "itemId": "3864",
+        "count": 2,
+        "price": 121
       }
     ],
-    "bonuses": 0
+    "bonuses": 352
   }
 });
 
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
 
-xhr.addEventListener("readystatechange", function() {
-  if(this.readyState === 4) {
-    console.log(this.responseText);
-  }
-});
-
-xhr.open("POST", "https://functions.yandexcloud.net/d4e1kjg25rb3rbcnqii0");
-xhr.setRequestHeader("Content-Type", "application/json");
-
-xhr.send(data);
+fetch("https://functions.yandexcloud.net/d4e1kjg25rb3rbcnqii0", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 </script>
 
 <style>
